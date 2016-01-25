@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>D3: A true bar chart with SVG rects</title>
+    <script type="text/javascript" src="http://palm.desertsun.com/JavaScript/d3/d3.min.js"></script>
+    <script src="http://www.d3plus.org/js/d3plus.js"></script>
+    <style type="text/css">
+	img#background {
+        position: absolute;
+        left: 220px;
+        top: 41px;
+        height: 300px;
+        opacity: 0.05;
+    }
+    
+    button {
+        position: absolute;
+        left: 85px;
+        top: 300px;
+        width: 100px;
+    }
+    
+    .chatter {
+        font-family: sans-serif;
+        font-size: 14px;
+        fill: black;
+    }
+    
+    .chatterTxtRect {
+        fill: white;
+    }
+    
+    .txtValues {
+        font-family: sans-serif;
+        font-size: 12px;
+        fill: black;
+        text-anchor: middle;
+    }
+}
+    </style>
+    <script>
+    function interactiveChart() {
+        //GLOBAL VARIABLES
+        //Width and height
+        var w = 539;
+        var h = 333;
+        var tw = 333;
+        var th = 250;
+        var barPadding = 4;
+        //Verticle scale of the bar chart
+        var yScale = d3.scale.linear()
+            .domain(
+                [0, 30]
+            )
+            .rangeRound(
+                [0, h]
+            );
+        var slideOneTxt = "A woman, Sarah, who lives in the Riverside County, wants to stay in contact with her brother, John, who is held in a local jail. Sarah opens a Securus account so John can call her, then makes a $25 deposit into her account through the company website.";
+        var slideTwoTxt = "Securus adds a $7.95 deposit fee to Sarah’s account, charging her for the “convenience” of using her credit card. Because Sarah wants John to be able to call her cell phone, instead of just a landline, so a monthly “wireless administration fee” of $3.99 is subtracted from her account.";
+        var slideThreeTxt = "Over the next two weeks, Sarah gets three calls from John. Each time, they talk for 15 minutes. Sarah is charged about 14 cents per minute, for a total of $6.12. Securus also tracks Sarah’s location, then offsets the cost by adding a 4% “location validation fee” to each of her calls.";
+        var slideFourTxt = "One day, Sarah drives to Arizona to visit her mother. John calls her house, while she is gone, then leaves a voicemail. Securus charges a voicemail fee of $1.95.";
+        var slideFiveTxt = "John then calls Sarah on her cell phone, and they speak for 15 minutes. The call costs 20 cents per minute, for a total of $3, plus the 4% location fee and a 5% “state cost recovery fee” that is applied to interstate calls. Sarah is also charged an additional $3.49 fee because she accepted an out-of-state call.";
+
+        //DATA VARIABLES
+        var dataset = [25, 0, 0];
+        var data = [1];
+
+        //START OF FUNCTIONS
+        function slideTwo() {
+            //New values for dataset
+            dataset = [21.01, 0, 11.94];
+            //Update svg
+            svg.selectAll("rect")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .attr("y", function(d) {
+                    return h - yScale(d);
+                })
+                .attr("height", function(d) {
+                    return yScale(d);
+                })
+                .attr("fill", function(d) {
+                    if (d == 21.01) {
+                        return "green";
+                    }
+                    if (d == 0) {
+                        return "orange";
+                    } else {
+                        return "red";
+                    }
+                });
+            svg.selectAll("text")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .text(function(d) {
+                    return "$" + d;
+                })
+                .attr("y", function(d) {
+                    return h - yScale(d) - 4;
+                });
+            //Update chatter
+            svg.selectAll("g")
+                .append("rect")
+                .attr("width", tw)
+                .attr("height", th)
+                .attr("class", "chatterTxtRect")
+                .attr("x", function(d) {
+                    return d.x;
+                })
+                .attr("y", function(d) {
+                    return d.y;
+                });
+            g.append("text")
+                .attr("x", "20")
+                .attr("y", "20")
+                .attr("class", "chatter")
+                .text(function() {
+                    return slideTwoTxt;
+                })
+                .each(function(d) {
+                    d3plus.textwrap().container(d3.select(this)).draw();
+                });
+        }
+
+        function slideThree() {
+            //New values for dataset
+            dataset = [14.65, 6.12, 12.18];
+            //Update all rects
+            svg.selectAll("rect")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .attr("y", function(d) {
+                    return h - yScale(d);
+                })
+                .attr("height", function(d) {
+                    return yScale(d);
+                })
+                .attr("fill", function(d) {
+                    if (d == 14.65) {
+                        return "green";
+                    }
+                    if (d == 6.12) {
+                        return "orange";
+                    } else {
+                        return "red";
+                    }
+                });
+            svg.selectAll("text")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .text(function(d) {
+                    return "$" + d;
+                })
+                .attr("y", function(d) {
+                    return h - yScale(d) - 4;
+                });
+            //Update chatter
+            svg.selectAll("g")
+                .append("rect")
+                .attr("width", tw)
+                .attr("height", th)
+                .attr("class", "chatterTxtRect")
+                .attr("x", function(d) {
+                    return d.x;
+                })
+                .attr("y", function(d) {
+                    return d.y;
+                });
+            g.append("text")
+                .attr("x", "20")
+                .attr("y", "20")
+                .text(function() {
+                    return slideThreeTxt;
+                })
+                .attr("class", "chatter")
+                .each(function(d) {
+                    d3plus.textwrap().container(d3.select(this)).draw();
+                });
+        }
+
+        function slideFour() {
+            //New values for dataset
+            dataset = [12.66, 6.12, 14.17];
+            //Update all rects
+            svg.selectAll("rect")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .attr("y", function(d) {
+                    return h - yScale(d);
+                })
+                .attr("height", function(d) {
+                    return yScale(d);
+                })
+                .attr("fill", function(d) {
+                    if (d == 12.66) {
+                        return "green";
+                    }
+                    if (d == 6.12) {
+                        return "orange";
+                    } else {
+                        return "red";
+                    }
+                });
+            svg.selectAll("text")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .text(function(d) {
+                    return "$" + d;
+                })
+                .attr("y", function(d) {
+                    return h - yScale(d) - 4;
+                });
+            //Update chatter
+            svg.selectAll("g")
+                .append("rect")
+                .attr("width", tw)
+                .attr("height", th)
+                .attr("class", "chatterTxtRect")
+                .attr("x", function(d) {
+                    return d.x;
+                })
+                .attr("y", function(d) {
+                    return d.y;
+                });
+            g.append("text")
+                .attr("x", "20")
+                .attr("y", "20")
+                .text(function() {
+                    return slideFourTxt;
+                })
+                .attr("class", "chatter")
+                .each(function(d) {
+                    d3plus.textwrap().container(d3.select(this)).draw();
+                });
+        }
+
+        function slideFive() {
+            //New values for dataset
+            dataset = [9.66, 9.12, 17.93];
+            //Update all rects
+            svg.selectAll("rect")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .attr("y", function(d) {
+                    return h - yScale(d);
+                })
+                .attr("height", function(d) {
+                    return yScale(d);
+                })
+                .attr("fill", function(d) {
+                    if (d == 9.66) {
+                        return "green";
+                    }
+                    if (d == 9.12) {
+                        return "orange";
+                    } else {
+                        return "red";
+                    }
+                });
+            svg.selectAll("text")
+                .data(dataset)
+                .transition()
+                .duration(1000)
+                .text(function(d) {
+                    return "$" + d;
+                })
+                .attr("y", function(d) {
+                    return h - yScale(d) - 4;
+                });
+            //Update chatter
+            svg.selectAll("g")
+                .append("rect")
+                .attr("width", tw)
+                .attr("height", th)
+                .attr("class", "chatterTxtRect")
+                .attr("x", function(d) {
+                    return d.x;
+                })
+                .attr("y", function(d) {
+                    return d.y;
+                });
+            g.append("text")
+                .attr("x", "20")
+                .attr("y", "20")
+                .text(function() {
+                    return slideFiveTxt;
+                })
+                .attr("class", "chatter")
+                .each(function(d) {
+                    d3plus.textwrap().container(d3.select(this)).draw();
+                });
+        }
+
+        //END OF FUNCTIONS
+
+        //Create SVG element
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+        svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("x", function(d, i) {
+                return i * 40 + (w - 150)
+            })
+            .attr("y", function(d) {
+                return h - yScale(d);
+            })
+            .attr("width", 40 - barPadding)
+            .attr("height", function(d) {
+                return yScale(d);
+            })
+            .attr("fill", function(d) {
+                if (d == 25) {
+                    return "green";
+                } else {
+                    return "white";
+                }
+
+            });
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("class", "txtValues")
+            .text(function(d) {
+                return "$" + d;
+            })
+            .attr("x", function(d, i) {
+                return i * 40 + (w - 150) + (40 - barPadding) / 2;
+            })
+            .attr("y", function(d) {
+                return h - yScale(d) - 4;
+            });
+        var g = svg.selectAll("g")
+            .data(data)
+            .enter()
+            .append("g");
+        g.append("rect")
+            .attr("width", tw)
+            .attr("height", th)
+            .attr("class", "chatterTxtRect")
+            .attr("x", function(d) {
+                return d.x;
+            })
+            .attr("y", function(d) {
+                return d.y;
+            });
+        g.append("text")
+            .attr("x", "20")
+            .attr("y", "20")
+            .text(function() {
+                return slideOneTxt;
+            })
+            .attr("class", "chatter")
+            .each(function(d) {
+                d3plus.textwrap().container(d3.select(this)).draw();
+            });
+
+        //Create event handler
+        //Move through slides
+        d3.select("#button")
+            .on("click", function() {
+                slideTwo();
+
+                d3.select("#button")
+                    .on("click", function() {
+                        slideThree();
+
+                        d3.select("#button")
+                            .on("click", function() {
+                                slideFour();
+
+                                d3.select("#button")
+                                    .on("click", function() {
+                                        slideFive();
+                                    });
+                            });
+                    });
+            });
+    }
+    </script>
+</head>
+
+<body>
+    <button id="button">Next</button>
+    <img id="background" src="http://palm.desertsun.com/2016Projects/20160120TDSJailCalls/20160120TDSJailCallsWoman.svg">
+    <script>
+    interactiveChart();
+    </script>
+</body>
+
+</html>
