@@ -302,42 +302,53 @@ img#background {
         }
 
         function slide6() {
-            //New values for dataset
-            dataset = [9.66, 9.12, 17.93];
-            //Update all rects
+            d3.select("svg").remove();
+            var datasetPie = [9.12, 17.93];
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
             svg.selectAll("rect")
-                .data(dataset)
-                .transition()
-                .duration(1000)
+                .data(datasetPie)
+                .enter()
+                .append("rect")
+                .attr("x", function(d, i) {
+                    return i * 40 + (w - 150)
+                })
                 .attr("y", function(d) {
                     return h - yScale(d);
                 })
+                .attr("width", 40 - barPadding)
                 .attr("height", function(d) {
                     return yScale(d);
                 })
                 .attr("fill", function(d) {
-                    if (d == 9.66) {
+                    if (d == 25) {
                         return "green";
-                    }
-                    if (d == 9.12) {
-                        return "orange";
                     } else {
-                        return "red";
+                        return "blue";
                     }
+
                 });
             svg.selectAll("text")
-                .data(dataset)
-                .transition()
-                .duration(1000)
+                .data(datasetPie)
+                .enter()
+                .append("text")
+                .attr("class", "txtValues")
                 .text(function(d) {
                     return "$" + d;
+                })
+                .attr("x", function(d, i) {
+                    return i * 40 + (w - 150) + (40 - barPadding) / 2;
                 })
                 .attr("y", function(d) {
                     return h - yScale(d) - 4;
                 });
-            //Update chatter
-            svg.selectAll("g")
-                .append("rect")
+            var g = svg.selectAll("g")
+                .data(data)
+                .enter()
+                .append("g");
+            g.append("rect")
                 .attr("width", tw)
                 .attr("height", th)
                 .attr("class", "chatterTxtRect")
@@ -358,6 +369,12 @@ img#background {
                     d3plus.textwrap().container(d3.select(this)).draw();
                 });
         }
+
+
+
+
+
+
 
 
         //END OF FUNCTIONS
