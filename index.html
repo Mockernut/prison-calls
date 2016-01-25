@@ -43,12 +43,17 @@ img#background {
     <script>
     function interactiveChart() {
         //GLOBAL VARIABLES
+        //GLOBAL VARIABLES
+        //GLOBAL VARIABLES
+        //GLOBAL VARIABLES
+
         //Width and height
         var w = 539;
         var h = 333;
         var tw = 333;
         var th = 250;
         var barPadding = 4;
+
         //Verticle scale of the bar chart
         var yScale = d3.scale.linear()
             .domain(
@@ -57,6 +62,7 @@ img#background {
             .rangeRound(
                 [0, h]
             );
+            
         var slideOneTxt = "A woman, Sarah, who lives in the Riverside County, wants to stay in contact with her brother, John, who is held in a local jail. Sarah opens a Securus account so John can call her, then makes a $25 deposit into her account through the company website.";
         var slideTwoTxt = "Securus adds a $7.95 deposit fee to Sarah’s account, charging her for the “convenience” of using her credit card. Because Sarah wants John to be able to call her cell phone, instead of just a landline, so a monthly “wireless administration fee” of $3.99 is subtracted from her account.";
         var slideThreeTxt = "Over the next two weeks, Sarah gets three calls from John. Each time, they talk for 15 minutes. Sarah is charged about 14 cents per minute, for a total of $6.12. Securus also tracks Sarah’s location, then offsets the cost by adding a 4% “location validation fee” to each of her calls.";
@@ -68,7 +74,12 @@ img#background {
         //DATA VARIABLES
         var dataset = [25, 0, 0];
         var data = [1];
+
         //START OF FUNCTIONS
+        //START OF FUNCTIONS
+        //START OF FUNCTIONS
+        //START OF FUNCTIONS
+
         function slide2() {
             buttonText.innerHTML = "Next";
             //New values for dataset
@@ -373,7 +384,12 @@ img#background {
                     d3plus.textwrap().container(d3.select(this)).draw();
                 });
         }
+        
         //END OF FUNCTIONS
+        //END OF FUNCTIONS
+        //END OF FUNCTIONS
+        //END OF FUNCTIONS
+
         //Create SVG element
         buttonText.innerHTML = "Next";
         var svg = d3.select("body")
@@ -439,8 +455,14 @@ img#background {
             .each(function(d) {
                 d3plus.textwrap().container(d3.select(this)).draw();
             });
-        //Create event handler
-        //Move through slides
+
+
+        //EVENT HANDLER TO MOVE THROUGH SLIDES
+        //EVENT HANDLER TO MOVE THROUGH SLIDES
+        //EVENT HANDLER TO MOVE THROUGH SLIDES
+        //EVENT HANDLER TO MOVE THROUGH SLIDES
+
+
         d3.select("#button")
             .on("click", function() {
                 slide2();
