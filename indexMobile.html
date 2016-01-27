@@ -9,9 +9,9 @@
     <style type="text/css">
 img#background {
         position: absolute;
-        left: 250px;
+        left: 130px;
         top: 41px;
-        height: 220px;
+        height: 215px;
         opacity: 0.1;
     }
     
@@ -19,7 +19,7 @@ img#background {
         position: absolute;
         left: 20px;
         top: 245px;
-        width: 540px;
+        width: 330px;
         font-family: sans-serif;
         font-size: 12px;
         fill: black;
@@ -28,14 +28,14 @@ img#background {
     
     button {
         position: absolute;
-        left: 116px;
+        left: 85px;
         top: 200px;
-        width: 100px;
+        width: 75px;
     }
     
     .chatter {
         font-family: sans-serif;
-        font-size: 14px;
+        font-size: 12px;
         fill: black;
     }
     
@@ -45,7 +45,7 @@ img#background {
     
     .txtValues {
         font-family: sans-serif;
-        font-size: 12px;
+        font-size: 9px;
         fill: black;
         text-anchor: middle;
     }
@@ -54,11 +54,6 @@ img#background {
         font-family: sans-serif;
         font-size: 12px;
         fill: black;
-    }
-    
-    #tds-jailcalls {
-        width: 540;
-        height: 235;
     }
 }
     </style>
@@ -70,12 +65,13 @@ img#background {
         //GLOBAL VARIABLES
 
         //Width and height
-        var w = 539;
+        var w = 320;
         var h = 233;
-        var tw = 333;
-        var th = 150;
-        var barPadding = 4;
-        var leftEdge = 143;
+        var tw = 220;
+        var th = 200;
+        var barPadding = 2;
+        var leftEdge = 80;
+        var barWidth = 25 - barPadding;
 
         //Verticle scale of the bar chart
         var yScale = d3.scale.linear()
@@ -468,12 +464,12 @@ img#background {
             bars.transition()
                 .duration(1000)
                 .attr("x", function(d, i) {
-                    return i * 60 + (w - leftEdge);
+                    return i * 37 + (w - leftEdge);
                 })
                 .attr("y", function(d) {
                     return h - yScale(d.value);
                 })
-                .attr("width", 60 - barPadding)
+                .attr("width", 37 - barPadding)
                 .attr("height", function(d) {
                     return yScale(d.value);
                 });
@@ -493,7 +489,7 @@ img#background {
 
 
             .attr("x", function(d, i) {
-                    return i * 60 + (w - leftEdge) + (60 - barPadding) / 2;
+                    return i * 37 + (w - leftEdge) + (37 - barPadding) / 2;
                 })
                 .attr("y", function(d) {
                     return h - yScale(d.value) - 4;
@@ -501,7 +497,7 @@ img#background {
 
 
 
-            .attr("width", 60 - barPadding)
+            .attr("width", 37 - barPadding)
                 .attr("height", function(d) {
                     return yScale(d.value);
                 });
@@ -577,14 +573,14 @@ img#background {
             .append("rect")
 
         .attr("x", function(d, i) {
-            return i * 40 + (w - leftEdge);
+            return i * 25 + (w - leftEdge);
         })
 
 
         .attr("y", function(d) {
                 return h - yScale(d.value);
             })
-            .attr("width", 40 - barPadding)
+            .attr("width", barWidth)
 
         .attr("height", function(d) {
                 return yScale(d.value);
@@ -605,7 +601,7 @@ img#background {
                 return "$" + d.value;
             })
             .attr("x", function(d, i) {
-                return i * 40 + (w - leftEdge) + (40 - barPadding) / 2;
+                return i * 25 + (w - leftEdge) + (25 - barPadding) / 2;
             })
             .attr("y", function(d) {
                 return h - yScale(d.value) - 4;
