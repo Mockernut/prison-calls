@@ -9,16 +9,22 @@
     <style type="text/css">
 img#background {
         position: absolute;
-        left: 220px;
+        left: 260px;
         top: 41px;
-        height: 300px;
-        opacity: 0.05;
+        height: 200px;
+        opacity: 0.1;
+    }
+    
+    img#legend {
+        position: absolute;
+        left: 20px;
+        top: 245px;
     }
     
     button {
         position: absolute;
-        left: 85px;
-        top: 300px;
+        left: 116px;
+        top: 200px;
         width: 100px;
     }
     
@@ -38,6 +44,17 @@ img#background {
         fill: black;
         text-anchor: middle;
     }
+    
+    .txtKey {
+        font-family: sans-serif;
+        font-size: 12px;
+        fill: black;
+    }
+    
+    #tds-jailcalls {
+        width: 540;
+        height: 235;
+    }
 }
     </style>
     <script>
@@ -49,10 +66,11 @@ img#background {
 
         //Width and height
         var w = 539;
-        var h = 333;
+        var h = 233;
         var tw = 333;
-        var th = 250;
+        var th = 150;
         var barPadding = 4;
+        var leftEdge = 143;
 
         //Verticle scale of the bar chart
         var yScale = d3.scale.linear()
@@ -443,9 +461,9 @@ img#background {
                 .data(dataset, key);
 
             bars.transition()
-                .duration(500)
+                .duration(1000)
                 .attr("x", function(d, i) {
-                    return i * 60 + (w - 150);
+                    return i * 60 + (w - leftEdge);
                 })
                 .attr("y", function(d) {
                     return h - yScale(d.value);
@@ -456,8 +474,8 @@ img#background {
                 });
             bars.exit()
                 .transition()
-                .duration(500)
-                .attr("x", -w)
+                .duration(250)
+                .attr("x", w)
                 .remove();
 
 
@@ -465,12 +483,12 @@ img#background {
                 .data(dataset, key);
 
             text.transition()
-                .duration(500)
+                .duration(1000)
 
 
 
             .attr("x", function(d, i) {
-                    return i * 60 + (w - 150) + (60 - barPadding) / 2;
+                    return i * 60 + (w - leftEdge) + (60 - barPadding) / 2;
                 })
                 .attr("y", function(d) {
                     return h - yScale(d.value) - 4;
@@ -484,8 +502,8 @@ img#background {
                 });
             text.exit()
                 .transition()
-                .duration(500)
-                .attr("x", -w)
+                .duration(0)
+                .attr("x", w)
                 .remove();
 
 
@@ -554,7 +572,7 @@ img#background {
             .append("rect")
 
         .attr("x", function(d, i) {
-            return i * 40 + (w - 150);
+            return i * 40 + (w - leftEdge);
         })
 
 
@@ -582,11 +600,14 @@ img#background {
                 return "$" + d.value;
             })
             .attr("x", function(d, i) {
-                return i * 40 + (w - 150) + (40 - barPadding) / 2;
+                return i * 40 + (w - leftEdge) + (40 - barPadding) / 2;
             })
             .attr("y", function(d) {
                 return h - yScale(d.value) - 4;
             });
+
+
+
         var g = svg.selectAll("g")
             .data(data)
             .enter()
@@ -655,6 +676,7 @@ img#background {
 <body>
     <button id="button"></button>
     <img id="background" src="http://palm.desertsun.com/2016Projects/20160120TDSJailCalls/20160120TDSJailCallsWoman.svg">
+    <img id="legend" src="http://palm.desertsun.com/2016Projects/20160120TDSJailCalls/legend.svg">
     <script>
     interactiveChart();
     </script>
